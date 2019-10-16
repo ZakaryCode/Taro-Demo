@@ -20,14 +20,25 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/indexS/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
-    }
+    },
+    // 'tabBar': {
+    //   position: 'top',
+    //   'list': [{
+    //     'pagePath': process.env.TARO_ENV === 'h5' ? '/pages/index/index' : '/pages/index/index',
+    //     'text': '首页'
+    //   }, {
+    //     'pagePath': process.env.TARO_ENV === 'h5' ? '/pages/indexS/index' : '/pages/indexS/index',
+    //     'text': '日志'
+    //   }]
+    // },
   }
 
   componentDidMount () {}
