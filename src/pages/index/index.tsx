@@ -50,6 +50,9 @@ const goods = [{
 }];
 
 export default class Index extends Component {
+  static options = {
+    addGlobalClass: true,
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -62,8 +65,8 @@ export default class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  static options = {
-    addGlobalClass: true,
+  state = {
+    shopCart: []
   }
 
   componentWillMount () { }
@@ -80,6 +83,29 @@ export default class Index extends Component {
     console.log('onReachBottom');
   }
 
+  handleCart = (good) => () => {
+    const cart: any[] = this.state.shopCart;
+    this.setState({
+      shopCart: cart.reduce((p, e) => {
+        if (p[0].id === e.id) {
+          p[0].count += e.count;
+        } else {
+          p.push(e);
+        }
+        return p;
+      }, [{ count: 1, ...good }])
+    }, () => {
+      Taro.setStorage({
+        key: 'SHOP_CART',
+        data: this.state.shopCart
+      }).then((e) => {
+        Taro.getStorage({ key: 'SHOP_CART' }).then(o => {
+          console.log(this.state.shopCart, e, o)
+        })
+      });
+    });
+  }
+
   render () {
     return (
       <View className='index'>
@@ -90,10 +116,19 @@ export default class Index extends Component {
               <Text className='good_info_name text_line_2'>{e.name}</Text>
               <View className='good_info_bottom'>
                 <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
-                <View className='shop-car' />
+                <View className='good_info_bottom_shop_car' onClick={this.handleCart(e)}>
+                  <View className='shop-car-icon shop-car_selected' />
+                </View>
               </View>
             </View>
           </View>)}
+        </View>
+        <View className='shop-car-btn' onClick={() => {
+          Taro.navigateTo({
+            url: `${process.env.TARO_ENV === 'h5' ? '/' : ''}pages/indexS/index`
+          })
+        }}>
+          <View className='shop-car-icon shop-car' />
         </View>
       </View>
     )

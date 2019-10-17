@@ -1,7 +1,70 @@
 .index {
     display: flex;
     flex-direction: column;
-    margin: 30px;
-    padding: 30px;
-    border: 1px solid red;
+    width: 100%;
+    max-height: 100%;
+}
+
+.goods_list {
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+    margin: 10px;
+}
+
+.good {
+    background-color: #fff;
+    margin: 1px 2px;
+    &_image {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+    &_info {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 20px;
+        justify-content: space-between;
+
+        &_name {
+            font-weight: bolder;
+            overflow: hidden;
+            lines: 2;
+            text-overflow: ellipsis;
+        }
+
+        &_bottom {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+
+            &_price {
+                color: red;
+            }
+            &_shop_car {
+                width: 25px;
+                height: 25px;
+                padding: 5px;
+                padding-left: 40px;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+            }
+        }
+    }
+}
+
+.shop-car-btn {
+    position: fixed;
+    padding: 25px;
+    width: 100px;
+    height: 100px;
+    right: 100px;
+    bottom: 100px;
+    background-color: #AAA;
+    opacity: 0.4;
+    border-radius: 50%;
 }
