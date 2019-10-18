@@ -1,6 +1,7 @@
 const config = {
   alias: {
     '@tarojs/mini-runner': '/Users/zhutianjian/project/taro/packages/taro-mini-runner',
+    '@tarojs/webpack-runner': '/Users/zhutianjian/project/taro/packages/taro-webpack-runner',
     '@tarojs/transformer-wx': '/Users/zhutianjian/project/taro/packages/taro-transformer-wx',
     // '@tarojs/components': '/Users/zhutianjian/project/taro/packages/taro-components',
     // '@tarojs/redux-h5': '/Users/zhutianjian/project/taro/packages/taro-redux-h5',
@@ -16,6 +17,7 @@ const config = {
   projectName: 'taro-demo',
   date: '2019-10-15',
   designWidth: 750,
+  onePxTransform: false,
   deviceRatio: {
     '640': 2.34 / 2,
     '750': 1,

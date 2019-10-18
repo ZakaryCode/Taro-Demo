@@ -226,6 +226,17 @@
     lodash "^4.17.10"
     prop-types "^15.6.1"
 
+"@tarojs/taro-h5@1.3.19":
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/@tarojs/taro-h5/-/taro-h5-1.3.19.tgz#abf4d90e9894f5f44bc892e71d63d8044f8d5cb2"
+  integrity sha512-mycMcvaNXzxv1BY1jyUrY0pRxO1qOAPFsZWWTyJiI12nGX1Uzwc3aak3tZgDt4K5Ykwf1kWUqUZe+3tnGrWPOw==
+  dependencies:
+    base64-js "^1.3.0"
+    jsonp-retry "^1.0.3"
+    mobile-detect "^1.4.2"
+    raf "^3.4.1"
+    whatwg-fetch "^2.0.4"
+
 "@tarojs/taro-h5@1.3.20":
   version "1.3.20"
   resolved "https://registry.yarnpkg.com/@tarojs/taro-h5/-/taro-h5-1.3.20.tgz#344afdf07336cb2d4a7108206c1e95bc65e402b8"
@@ -342,18 +353,17 @@
   resolved "https://registry.yarnpkg.com/@tarojs/utils/-/utils-1.3.20.tgz#9c8d245818ef10653b78687e412641c855e6b7f0"
   integrity sha512-3/NyIFszsc2ZlZtKfD5NR43luWTqUSYiGiGD3lM9q+8prc2jiKTZ699//0gZOP4G09hopAQMb8nghDvdo39HzA==
 
-"@tarojs/webpack-runner@1.3.20":
-  version "1.3.20"
-  resolved "https://registry.yarnpkg.com/@tarojs/webpack-runner/-/webpack-runner-1.3.20.tgz#27bdf41de171b3166afc6f135c31d33ddc51672e"
-  integrity sha512-RoKeKeUrUz85aaOtFqSl8FIwp5qv7ToCDaBpQxkdn6AIrgcjpq/TQ8A7214IyfIc35c7VeQMSBCnbC+dntfxag==
+"@tarojs/webpack-runner@../taro/packages/taro-webpack-runner":
+  version "1.3.19"
   dependencies:
-    "@tarojs/taro-h5" "1.3.20"
+    "@tarojs/taro" "1.3.19"
+    "@tarojs/taro-h5" "1.3.19"
     autoprefixer "8.6.4"
     babel-core "6.26.0"
     babel-loader "7.1.4"
     babel-plugin-syntax-dynamic-import "6.18.0"
     babel-plugin-transform-react-jsx "6.24.1"
-    babel-plugin-transform-taroapi "1.3.20"
+    babel-plugin-transform-taroapi "1.3.19"
     babel-types "6.26.0"
     chalk "2.4.2"
     copy-webpack-plugin "^5.0.3"
@@ -371,8 +381,8 @@
     opn "5.3.0"
     ora "2.1.0"
     postcss-loader "2.1.6"
-    postcss-plugin-constparse "1.3.20"
-    postcss-pxtransform "1.3.20"
+    postcss-plugin-constparse "1.3.19"
+    postcss-pxtransform "1.3.19"
     resolve "1.8.1"
     resolve-url-loader "2.3.0"
     sass-loader "7.1.0"
@@ -1795,10 +1805,10 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-plugin-transform-taroapi@1.3.20:
-  version "1.3.20"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-taroapi/-/babel-plugin-transform-taroapi-1.3.20.tgz#e8e8816214fa2526c6f3385471b64260bd41728d"
-  integrity sha512-yVo42v0xXX2cia0JPzxd+N0C6cDVD2DNRQkD01DGq7+OOFK7fHhrhkgwmGIPj+vP5RJVeX8iIi0hDbOYZdp5UQ==
+babel-plugin-transform-taroapi@1.3.19:
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-taroapi/-/babel-plugin-transform-taroapi-1.3.19.tgz#7b0c886b95417513a4e7f3e879aa7ef2e79b413e"
+  integrity sha512-61K+xuq99Ed51L2qH8t5243qqafccjzOolkGu+46CNqrwTSGeED5TI4Pva8xwCRs5wlaZgfpaZuGCCdnSAedIw==
 
 babel-preset-env@^1.6.1:
   version "1.7.0"
@@ -7085,10 +7095,10 @@ postcss-modules-values@^3.0.0:
     icss-utils "^4.0.0"
     postcss "^7.0.6"
 
-postcss-plugin-constparse@1.3.20:
-  version "1.3.20"
-  resolved "https://registry.yarnpkg.com/postcss-plugin-constparse/-/postcss-plugin-constparse-1.3.20.tgz#e6a874f8b6f6842ce9080ff75f1a5d74bb060e64"
-  integrity sha512-BtNw1X8fxiN0rjOHLhxDQ8nuvFK+VQhWtr+R2MRxjOdYPY90ravsvNWKtRQapKzXZMZaN7GaiWTShlPs235fyw==
+postcss-plugin-constparse@1.3.19:
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/postcss-plugin-constparse/-/postcss-plugin-constparse-1.3.19.tgz#2d59090378081673cc909d6b816d52211c38f5fa"
+  integrity sha512-t0vtZarETf5g/GnXUV7eWeH6g8qScojwZyKOaIFIlPVLLhVr4El8IQ4bjE9WXWy+hzKJfF7HVRHxnidc/3MLmg==
   dependencies:
     postcss "^6.0.22"
 
@@ -7100,7 +7110,15 @@ postcss-pxtorem@^4.0.1:
     object-assign "^4.1.0"
     postcss "^5.2.10"
 
-postcss-pxtransform@1.3.20, postcss-pxtransform@^1.3.2:
+postcss-pxtransform@1.3.19:
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/postcss-pxtransform/-/postcss-pxtransform-1.3.19.tgz#6318c107b7d34793eb81f204e5b894a481d22c76"
+  integrity sha512-n7SGY9CC9EymMkmUxZKUJvtcVFmtIRsOV36PwpsAJYf/4gKCux6HHwXI9P35v7EUTHE9Sz8bib0wGJUv/46zhw==
+  dependencies:
+    postcss "^6.0.16"
+    postcss-pxtorem "^4.0.1"
+
+postcss-pxtransform@^1.3.2:
   version "1.3.20"
   resolved "https://registry.yarnpkg.com/postcss-pxtransform/-/postcss-pxtransform-1.3.20.tgz#3bfd5aaef20e74ccc1f9ba9dbeece090e3d163be"
   integrity sha512-gpSwz6kLoFydaDCTOJnRTHLD5Zmcb9pVk1P2eaFJf3sn8hFdsan4Zwtc9l14uGQHyxQJnq1/0ETOlAmRaN2yyA==

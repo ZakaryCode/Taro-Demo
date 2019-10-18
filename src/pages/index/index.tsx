@@ -69,7 +69,13 @@ export default class Index extends Component {
     shopCart: []
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
+      this.setState({
+        shopCart: e.data
+      })
+    });
+  }
 
   componentDidMount () { }
 
@@ -98,10 +104,8 @@ export default class Index extends Component {
       Taro.setStorage({
         key: 'SHOP_CART',
         data: this.state.shopCart
-      }).then((e) => {
-        Taro.getStorage({ key: 'SHOP_CART' }).then(o => {
-          console.log(this.state.shopCart, e, o)
-        })
+      }).then(() => {
+        Taro.showToast({ title: '添加至购物车', icon: 'none', duration: 2000 })
       });
     });
   }
@@ -109,6 +113,7 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
+        {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
         <View className='goods_list'>
           {goods.map((e, i) => <View key={e.id} className='good'>
             <Image className='good_image' src={e.images[0]} />
@@ -117,7 +122,7 @@ export default class Index extends Component {
               <View className='good_info_bottom'>
                 <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
                 <View className='good_info_bottom_shop_car' onClick={this.handleCart(e)}>
-                  <View className='shop-car-icon shop-car_selected' />
+                  <View className='bg-icon shop-car_selected' />
                 </View>
               </View>
             </View>
@@ -128,7 +133,7 @@ export default class Index extends Component {
             url: `${process.env.TARO_ENV === 'h5' ? '/' : ''}pages/indexS/index`
           })
         }}>
-          <View className='shop-car-icon shop-car' />
+          <View className='bg-icon shop-car' />
         </View>
       </View>
     )
