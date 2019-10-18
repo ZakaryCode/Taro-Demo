@@ -18,22 +18,33 @@ export default class Index extends Component {
 
   state = {
     shopCart: [],
-    moveAction: false
+    moveAction: false,
+    windowWidth: 1080
   }
 
   componentWillMount () {
-    Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
-      this.setState({
-        shopCart: e.data
-      })
-    });
+    if (process.env.TARO_ENV === 'quickapp') {
+      const device = require('@system.device');
+      device.getInfo().then(e => {
+        console.log(e.data)
+        this.setState({
+          windowWidth: e.data.windowWidth
+        });
+      });
+    }
   }
 
   componentDidMount () { }
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () {
+    Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
+      this.setState({
+        shopCart: e.data
+      });
+    });
+  }
 
   componentDidHide () { }
 
@@ -64,10 +75,11 @@ export default class Index extends Component {
     });
   }
 
-  onTouchStartHandler = (good) => (event) => {
-    const { pageX } = event.changedTouches[0];
-    const children = event.currentTarget.children;
-    const hideWidth = children[children.length - 1].offsetWidth;
+  onTouchStartHandler = (good = {}) => (event) => {
+    const { pageX } = event.changedTouches[0] || event.touches[0];
+    const target = event.currentTarget;
+    const children = target.children || event.touches || [];
+    const hideWidth = (children[children.length - 1] || {}).offsetWidth || (160 / .75);
     let _lists: any[] = this.state.shopCart;
     _lists.map(_item => {
       if (_item.id != good.id) {
@@ -87,12 +99,12 @@ export default class Index extends Component {
     if (!moveAction) {
       return;
     }
-    const { pageX } = event.changedTouches[0];
+    const { pageX } = event.changedTouches[0] || event.touches[0];
     const distance = pageX - good.startX;
     let _lists: any[] = this.state.shopCart;
     _lists.forEach(_item => {
       if (_item.id == good.id) {
-        _item.x = distance < - good.widthRange / 2 ? - good.widthRange : 0;
+        _item.x = distance < - good.widthRange / 3 ? - good.widthRange : 0;
         _item.startX = 0;
       }
     });
@@ -103,7 +115,7 @@ export default class Index extends Component {
   }
 
   onTouchMoveHandler = (good) => (event) => {
-    const { pageX } = event.changedTouches[0];
+    const { pageX } = event.changedTouches[0] || event.touches[0];
     const distance = pageX - good.startX;
     let _lists: any[] = this.state.shopCart;
     _lists.forEach(_item => {
@@ -163,11 +175,13 @@ export default class Index extends Component {
   render () {
     const cart: any[] = this.state.shopCart || [];
     return (
-      <View className='index'>
+      <View className='index'
+        onTouchStart={this.onTouchStartHandler()}>
         {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
         <View className='carts'>
           {cart.map((e, i) => 
-            <View key={e.id} className='cart_one'>
+            <View key={e.id} className='cart_one'
+              style={process.env.TARO_ENV === 'quickapp' ? { width: this.state.windowWidth + 230 } : {}}>
               <View className='good cart_one_good'
                   onTouchStart={this.onTouchStartHandler(e)}
                   onTouchEnd={this.onHandleSlideOut(e)}
@@ -185,11 +199,16 @@ export default class Index extends Component {
                     </View>
                   </View>
                 </View>
-                <View className='good_delete' onClick={this.onDeleteItem(e)}>删除</View>
+                <View
+                  className='good_delete'
+                  onClick={this.onDeleteItem(e)}
+                  style={process.env.TARO_ENV === 'quickapp' ? {} : { position: 'absolute', right: Taro.pxTransform(-160), top: 0 }}>
+                    <Text style={{ color: '#FFF' }}>删除</Text>
+                  </View>
               </View>
             </View>)}
         </View>
-        <View className={`settle-accounts-btn settle-accounts-btn_${cart.length < 1 ? 'empty' : 'shop'}`} onClick={() => cart.length < 1 ?
+        <View className={`settle-accounts-btn`} style={cart.length < 1 ? { backgroundColor: '#DDD' } : { backgroundColor: '#FF0000' }} onClick={() => cart.length < 1 ?
             Taro.showToast({ title: '购物车为空', icon: 'none', duration: 2000 }) :
             Taro.showModal({ title: '提示', content: '购买成功', showCancel: false }).then(() => {
               Taro.setStorage({
@@ -199,7 +218,7 @@ export default class Index extends Component {
                 Taro.navigateBack();
               });
             })}>
-          <Text>结算</Text>
+          <Text style={cart.length < 1 ? { color: '#AAA' } : { color: '#FFF' }}>结算</Text>
         </View>
       </View>
     )

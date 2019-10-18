@@ -70,19 +70,19 @@ export default class Index extends Component {
     shopCart: []
   }
 
-  componentWillMount () {
+  componentWillMount () { }
+
+  componentDidMount () { }
+
+  componentWillUnmount () { }
+
+  componentDidShow () {
     Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
       this.setState({
         shopCart: e.data
       })
     });
   }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
 
   componentDidHide () { }
 
