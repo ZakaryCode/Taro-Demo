@@ -5,9 +5,13 @@
     max-height: 100%;
 }
 
-.header {
-    text-align: center;
-    margin: 10px auto;
+.text_line_2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /*! autoprefixer: ignore next */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .carts {
@@ -15,6 +19,14 @@
     flex-direction: column;
     background-color: #eee;
     margin-bottom: 100px;
+}
+
+.cart_one {
+    overflow: hidden;
+    &_good {
+        position: relative;
+        width: calc(100% + 160px);
+    }
 }
 
 .good {
@@ -38,12 +50,6 @@
 
         &_name {
             font-weight: bolder;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            /*! autoprefixer: ignore next */
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            overflow: hidden;
         }
 
         &_bottom {
@@ -73,6 +79,16 @@
             }
         }
     }
+    &_delete {
+        background-color: #FF0000;
+        color: #FFF;
+        height: 200px;
+        line-height: 200px;
+        padding: 10px 0;
+        width: 160px;
+        font-size: 40px;
+        text-align: center;
+    }
 }
 
 .settle-accounts-btn {
@@ -89,7 +105,7 @@
     }
 
     &_shop {
-        background-color: #ff0000;
+        background-color: #FF0000;
         color: #FFF;
     }
 }

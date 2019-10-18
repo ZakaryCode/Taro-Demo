@@ -5,9 +5,13 @@
     max-height: 100%;
 }
 
-.header {
-    text-align: center;
-    margin: 10px auto;
+.text_line_2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /*! autoprefixer: ignore next */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .goods_list {
@@ -38,12 +42,6 @@
 
         &_name {
             font-weight: bolder;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            /*! autoprefixer: ignore next */
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            overflow: hidden;
         }
 
         &_bottom {
