@@ -75,7 +75,7 @@ export default class Index extends Component {
     });
   }
 
-  onTouchStartHandler = (good = {}) => (event) => {
+  onTouchStartHandler = (good: any = {}, event) => {
     const { pageX } = event.changedTouches[0] || event.touches[0];
     const target = event.currentTarget;
     const children = target.children || event.touches || [];
@@ -94,7 +94,7 @@ export default class Index extends Component {
     });
   }
 
-  onHandleSlideOut = (good) => (event) => {
+  onHandleSlideOut = (good: any = {}, event) => {
     const { moveAction } = this.state;
     if (!moveAction) {
       return;
@@ -114,7 +114,7 @@ export default class Index extends Component {
     });
   }
 
-  onTouchMoveHandler = (good) => (event) => {
+  onTouchMoveHandler = (good: any = {}, event) => {
     const { pageX } = event.changedTouches[0] || event.touches[0];
     const distance = pageX - good.startX;
     let _lists: any[] = this.state.shopCart;
@@ -133,7 +133,7 @@ export default class Index extends Component {
     });
   }
 
-  onDeleteItem = (good) => (event) => {
+  onDeleteItem = (good: any = {}, event) => {
     event.stopPropagation();
     Taro.showModal({
       title: "提示",
@@ -176,16 +176,16 @@ export default class Index extends Component {
     const cart: any[] = this.state.shopCart || [];
     return (
       <View className='index'
-        onTouchStart={this.onTouchStartHandler()}>
+        onTouchStart={this.onTouchStartHandler.bind(this)}>
         {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
         <View className='carts'>
           {cart.map((e, i) => 
             <View key={e.id} className='cart_one'
               style={process.env.TARO_ENV === 'quickapp' ? { width: this.state.windowWidth + 230 } : {}}>
               <View className='good cart_one_good'
-                  onTouchStart={this.onTouchStartHandler(e)}
-                  onTouchEnd={this.onHandleSlideOut(e)}
-                  onTouchMove={this.onTouchMoveHandler(e)}
+                  onTouchStart={this.onTouchStartHandler.bind(this, e)}
+                  onTouchEnd={this.onHandleSlideOut.bind(this, e)}
+                  onTouchMove={this.onTouchMoveHandler.bind(this, e)}
                   style={{ left: e.x || 0 }}>
                 <Image className='good_image' src={e.images[0]} />
                 <View className='good_info'>
@@ -201,7 +201,7 @@ export default class Index extends Component {
                 </View>
                 <View
                   className='good_delete'
-                  onClick={this.onDeleteItem(e)}
+                  onClick={this.onDeleteItem.bind(this, e)}
                   style={process.env.TARO_ENV === 'quickapp' ? {} : { position: 'absolute', right: Taro.pxTransform(-160), top: 0 }}>
                     <Text style={{ color: '#FFF' }}>删除</Text>
                   </View>

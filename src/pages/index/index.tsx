@@ -90,7 +90,7 @@ export default class Index extends Component {
     console.log('onReachBottom');
   }
 
-  handleCart = (good) => () => {
+  handleCart = (good, _event) => {
     const cart: any[] = this.state.shopCart;
     this.setState({
       shopCart: cart.reduce((p, e) => {
@@ -122,7 +122,7 @@ export default class Index extends Component {
               <Text className='good_info_name text_line_2'>{e.name}</Text>
               <View className='good_info_bottom'>
                 <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
-                <View className='good_info_bottom_shop_car' onClick={this.handleCart(e)}>
+                <View className='good_info_bottom_shop_car' onClick={this.handleCart.bind(this, e)}>
                   <View className='bg-icon shop-car_selected' />
                 </View>
               </View>
