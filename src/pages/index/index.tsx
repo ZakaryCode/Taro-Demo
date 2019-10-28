@@ -48,7 +48,7 @@ const goods = [{
   name: '冷冻进口阿根廷红虾 烧烤大虾 海鲜年货 L2级 2kg 40-60尾 盒装',
   images: ['https://img13.360buyimg.com/n1/jfs/t13006/184/2451709459/147285/ede36bd4/5a41f941N3b987f20.jpg'],
   price: 15800,
-}];
+}]
 
 export default class Index extends Component {
   static options = {
@@ -67,10 +67,15 @@ export default class Index extends Component {
   }
 
   state = {
-    shopCart: []
+    pageNumber: 0,
+    list: [],
+    shopCart: [],
+    isLoading: false
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    this.handlePageData()
+  }
 
   componentDidMount () { }
 
@@ -81,25 +86,47 @@ export default class Index extends Component {
       this.setState({
         shopCart: e.data || []
       })
-    });
+    })
   }
 
   componentDidHide () { }
 
   onReachBottom() {
-    console.log('onReachBottom');
+    console.log('onReachBottom')
+    this.handlePageData()
+  }
+
+  handlePageData = (pageSize = 10, _maxPage = 10) => {
+    if (this.state.isLoading) return
+    this.setState({
+      isLoading: true
+    }, () => {
+      const index = this.state.pageNumber || 0
+      const list: any[] = this.state.list
+      list[index] = randerDate(pageSize)
+      // const i = list.length - maxPage
+      this.setState({
+        list: [...list], // [...list.slice(i > 0 ? i : 0)],
+        pageNumber: index + 1,
+        isLoading: false
+      })
+    })
+    
+    function randerDate(size) {
+      return new Array(size).fill('').map(() => goods[Math.floor(Math.random() * goods.length)])
+    }
   }
 
   handleCart = (good, _event) => {
-    const cart: any[] = this.state.shopCart || [];
+    const cart: any[] = this.state.shopCart || []
     this.setState({
       shopCart: cart.reduce((p, e) => {
         if (p[0].id === e.id) {
-          p[0].count += e.count;
+          p[0].count += e.count
         } else {
-          p.push(e);
+          p.push(e)
         }
-        return p;
+        return p
       }, [{ count: 1, ...good }])
     }, () => {
       Taro.setStorage({
@@ -107,28 +134,33 @@ export default class Index extends Component {
         data: this.state.shopCart
       }).then(() => {
         Taro.showToast({ title: '添加至购物车', icon: 'none', duration: 2000 })
-      });
-    });
+      })
+    })
   }
 
   render () {
+    const list: any[] = this.state.list
+
     return (
       <View className='index'>
         {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
-        <View className='goods_list'>
-          {goods.map((e, i) => <View key={e.id} className='good'>
-            <Image className='good_image' src={e.images[0]} />
-            <View className='good_info'>
-              <Text className='good_info_name text_line_2'>{e.name}</Text>
-              <View className='good_info_bottom'>
-                <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
-                <View className='good_info_bottom_shop_car' onClick={this.handleCart.bind(this, e)}>
-                  <View className='bg-icon shop-car_selected' />
+        {list.map((p, i) => 
+          p && p.length > 0 ? <View key={`page_${i}`} className='goods_list'>
+            {p.map(e => <View key={e.id} className='good'>
+              <Image className='good_image' src={e.images[0]} />
+              <View className='good_info'>
+                <Text className='good_info_name text_line_2'>{e.name}</Text>
+                <View className='good_info_bottom'>
+                  <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
+                  <View className='good_info_bottom_shop_car' onClick={this.handleCart.bind(this, e)}>
+                    <View className='bg-icon shop-car_selected' />
+                  </View>
                 </View>
               </View>
-            </View>
-          </View>)}
-        </View>
+            </View>)}
+          </View>
+          : <View key={`page_${i}`} className='goods_list' />)
+        }
         <View className='shop-car-btn' onClick={() => {
           Taro.navigateTo({
             url: `${process.env.TARO_ENV === 'quickapp' ? '' : '/'}pages/cart/index`

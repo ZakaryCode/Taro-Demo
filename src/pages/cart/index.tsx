@@ -27,7 +27,7 @@ export default class Index extends Component {
       complete: e => {
         this.setState({
           windowWidth: e.result ? e.result.windowWidth : e.windowWidth
-        });
+        })
       }
     })
   }
@@ -40,110 +40,110 @@ export default class Index extends Component {
     Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
       this.setState({
         shopCart: e.data
-      });
-    });
+      })
+    })
   }
 
   componentDidHide () { }
 
   handleCartCounters = (isIncrement, good) => () => {
-    const cart: any[] = this.state.shopCart;
+    const cart: any[] = this.state.shopCart
     this.setState({
       shopCart: cart.map(e => {
         if (good.id === e.id) {
           if (isIncrement) {
-            e.count++;
+            e.count++
           } else if (e.count > 1) {
-            e.count--;
+            e.count--
           } else {
             Taro.showToast({
               title: '已经不多了，不能再减少了 ( ﹁ ﹁ )',
               icon: 'none',
               duration: 2000
-            });
+            })
           }
         }
-        return e;
+        return e
       })
     }, () => {
       Taro.setStorage({
         key: 'SHOP_CART',
         data: this.state.shopCart
-      });
-    });
+      })
+    })
   }
 
   onTouchStartHandler = (good: any = {}, event) => {
-    const { pageX } = event.changedTouches[0] || event.touches[0];
-    const target = event.currentTarget;
-    const children = target.children || event.touches || [];
-    const hideWidth = (children[children.length - 1] || {}).offsetWidth || (160 / .75);
-    let _lists: any[] = this.state.shopCart;
+    const { pageX } = event.changedTouches[0] || event.touches[0]
+    const target = event.currentTarget
+    const children = target.children || event.touches || []
+    const hideWidth = (children[children.length - 1] || {}).offsetWidth || (160 / .75)
+    let _lists: any[] = this.state.shopCart
     _lists.map(_item => {
       if (_item.id != good.id) {
-        _item.x = 0;
+        _item.x = 0
       } else {
-        _item.startX = pageX;
-        _item.widthRange = hideWidth;
+        _item.startX = pageX
+        _item.widthRange = hideWidth
       }
-    });
+    })
     this.setState({
       shopCart: _lists
-    });
+    })
   }
 
   onHandleSlideOut = (good: any = {}, event) => {
-    const { moveAction } = this.state;
+    const { moveAction } = this.state
     if (!moveAction) {
-      return;
+      return
     }
-    const { pageX } = event.changedTouches[0] || event.touches[0];
-    const distance = pageX - good.startX;
-    let _lists: any[] = this.state.shopCart;
+    const { pageX } = event.changedTouches[0] || event.touches[0]
+    const distance = pageX - good.startX
+    let _lists: any[] = this.state.shopCart
     _lists.forEach(_item => {
       if (_item.id == good.id) {
-        _item.x = distance < - good.widthRange / 3 ? - good.widthRange : 0;
-        _item.startX = 0;
+        _item.x = distance < - good.widthRange / 3 ? - good.widthRange : 0
+        _item.startX = 0
       }
-    });
+    })
     this.setState({
       shopCart: _lists,
       moveAction: false
-    });
+    })
   }
 
   onTouchMoveHandler = (good: any = {}, event) => {
-    const { pageX } = event.changedTouches[0] || event.touches[0];
-    const distance = pageX - good.startX;
-    let _lists: any[] = this.state.shopCart;
+    const { pageX } = event.changedTouches[0] || event.touches[0]
+    const distance = pageX - good.startX
+    let _lists: any[] = this.state.shopCart
     _lists.forEach(_item => {
       if (_item.id == good.id) {
-        let x = distance;
-        if (x > 0) x = 0;
-        if (x < - good.widthRange) x = - good.widthRange;
-        _item.x = x;
-        _item.startX = good.startX;
+        let x = distance
+        if (x > 0) x = 0
+        if (x < - good.widthRange) x = - good.widthRange
+        _item.x = x
+        _item.startX = good.startX
       }
-    });
+    })
     this.setState({
       shopCart: _lists,
       moveAction: true
-    });
+    })
   }
 
   onDeleteItem = (good: any = {}, event) => {
-    event.stopPropagation();
+    event.stopPropagation()
     Taro.showModal({
       title: "提示",
       content: `确定要从购物车移除“${good.name}”吗？`,
       success: res => {
-        let _lists: any[] = this.state.shopCart;
+        let _lists: any[] = this.state.shopCart
         if (res.confirm) {
           _lists.map((_item, index, _lists) => {
             if (_item.id == good.id) {
-              _lists.splice(index, 1);
+              _lists.splice(index, 1)
             }
-          });
+          })
           this.setState(
             {
               lists: _lists
@@ -152,26 +152,26 @@ export default class Index extends Component {
               Taro.showToast({
                 title: "删除成功",
                 icon: "success"
-              });
+              })
             }
-          );
+          )
         } else if (res.cancel) {
           _lists.forEach(_item => {
             if (_item.id == good.id) {
-              _item.startX = 0;
-              _item.x = 0;
+              _item.startX = 0
+              _item.x = 0
             }
-          });
+          })
           this.setState({
             lists: _lists
-          });
+          })
         }
       }
-    });
+    })
   }
 
   render () {
-    const cart: any[] = this.state.shopCart || [];
+    const cart: any[] = this.state.shopCart || []
     return (
       <View className='index'
         onTouchStart={this.onTouchStartHandler.bind(this, {})}>
@@ -213,8 +213,8 @@ export default class Index extends Component {
                 key: 'SHOP_CART',
                 data: []
               }).then(() => {
-                Taro.navigateBack();
-              });
+                Taro.navigateBack()
+              })
             })}>
           <Text style={cart.length < 1 ? { color: '#AAA' } : { color: '#FFF' }}>结算</Text>
         </View>

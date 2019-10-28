@@ -28,7 +28,7 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black',
-      onReachBottomDistance: 100
+      onReachBottomDistance: 300
     },
     // tabBar: {
     //   list: [{
