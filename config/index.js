@@ -1,19 +1,5 @@
 const config = {
-  alias: {
-    '@tarojs/mini-runner': '/Users/zhutianjian/project/taro/packages/taro-mini-runner',
-    '@tarojs/webpack-runner': '/Users/zhutianjian/project/taro/packages/taro-webpack-runner',
-    '@tarojs/transformer-wx': '/Users/zhutianjian/project/taro/packages/taro-transformer-wx',
-    // '@tarojs/components': '/Users/zhutianjian/project/taro/packages/taro-components',
-    // '@tarojs/redux-h5': '/Users/zhutianjian/project/taro/packages/taro-redux-h5',
-    // '@tarojs/router': '/Users/zhutianjian/project/taro/packages/taro-router',
-    // '@tarojs/taro': '/Users/zhutianjian/project/taro/packages/taro',
-    // '@tarojs/taro-h5': '/Users/zhutianjian/project/taro/packages/taro-h5',
-    // '@tarojs/webpack-runner': '/Users/zhutianjian/project/taro/packages/taro-webpack-runner',
-    // '@tarojs/mobx-h5': '/Users/zhutianjian/project/taro/packages/taro-mobx-h5',
-    // '@/src': path.resolve(__dirname, '..', 'src'),
-    // '@components': path.resolve(__dirname, '..', 'src/components')
-    // 'taro-ui': '/Users/zhutianjian/project/taro/taro-ui'
-  },
+  alias: {},
   projectName: 'taro-demo',
   date: '2019-10-15',
   designWidth: 750,
@@ -24,28 +10,25 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  outputRoot: `dist/${process.env.TARO_ENV}`,
   plugins: [],
   babel: {
     sourceMap: true,
     presets: [
-      ['env', {
+      [require.resolve('babel-preset-env'), {
         modules: false
       }]
     ],
     plugins: [
-      'transform-decorators-legacy',
-      'transform-class-properties',
-      'transform-object-rest-spread'
+      require.resolve('babel-plugin-transform-decorators-legacy'),
+      require.resolve('babel-plugin-transform-class-properties'),
+      require.resolve('babel-plugin-transform-object-rest-spread')
     ]
   },
-  defineConstants: {
-  },
+  defineConstants: {},
   copy: {
-    patterns: [
-    ],
-    options: {
-    }
+    patterns: [],
+    options: {}
   },
   mini: {
     postcss: {
@@ -61,9 +44,7 @@ const config = {
       },
       pxtransform: {
         enable: true,
-        config: {
-
-        }
+        config: {}
       },
       cssModules: {
         enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
@@ -100,8 +81,22 @@ const config = {
 }
 
 module.exports = function (merge) {
+  const path = require('path');
+  const configure = {
+    alias: {
+      // '@tarojs/taro': path.resolve(__dirname, '../../', '/taro/packages/taro'),
+      // '@tarojs/taro-h5': path.resolve(__dirname, '../../', '/taro/packages/taro-h5'),
+      // '@tarojs/taro-quickapp': path.resolve(__dirname, '../../', '/taro/packages/taro-quickapp'),
+      // '@tarojs/taro-components': path.resolve(__dirname, '../../', '/taro/packages/taro-components'),
+      '@tarojs/taro-webpack-runner': path.resolve(__dirname, '../../', '/taro/packages/taro-webpack-runner'),
+      '@tarojs/taro-mini-runner': path.resolve(__dirname, '../../', '/taro/packages/taro-mini-runner'),
+      '@tarojs/transformer-wx': path.resolve(__dirname, '../../', '/taro/packages/taro-transformer-wx'),
+      // '@src': path.resolve(__dirname, '../../', 'src'),
+      // '@components': path.resolve(__dirname, '../../', 'src/components')
+    }
+  };
   if (process.env.NODE_ENV === 'development') {
-    return merge({}, config, require('./dev'))
+    return merge(configure, config, require('./dev'))
   }
-  return merge({}, config, require('./prod'))
+  return merge(configure, config, require('./prod'))
 }

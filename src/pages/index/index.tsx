@@ -79,7 +79,7 @@ export default class Index extends Component {
   componentDidShow () {
     Taro.getStorage({ key: 'SHOP_CART' }).then(e => {
       this.setState({
-        shopCart: e.data
+        shopCart: e.data || []
       })
     });
   }
@@ -91,7 +91,7 @@ export default class Index extends Component {
   }
 
   handleCart = (good, _event) => {
-    const cart: any[] = this.state.shopCart;
+    const cart: any[] = this.state.shopCart || [];
     this.setState({
       shopCart: cart.reduce((p, e) => {
         if (p[0].id === e.id) {
@@ -131,7 +131,7 @@ export default class Index extends Component {
         </View>
         <View className='shop-car-btn' onClick={() => {
           Taro.navigateTo({
-            url: `${process.env.TARO_ENV === 'h5' ? '/' : ''}pages/indexS/index`
+            url: `${process.env.TARO_ENV === 'quickapp' ? '' : '/'}pages/indexS/index`
           })
         }}>
           <View className='bg-icon shop-car' />

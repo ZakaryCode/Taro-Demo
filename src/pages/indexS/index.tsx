@@ -23,15 +23,13 @@ export default class Index extends Component {
   }
 
   componentWillMount () {
-    if (process.env.TARO_ENV === 'quickapp') {
-      const device = require('@system.device');
-      device.getInfo().then(e => {
-        console.log(e.data)
+    Taro.getSystemInfo({
+      complete: e => {
         this.setState({
-          windowWidth: e.data.windowWidth
+          windowWidth: e.result.windowWidth
         });
-      });
-    }
+      }
+    })
   }
 
   componentDidMount () { }
@@ -176,7 +174,7 @@ export default class Index extends Component {
     const cart: any[] = this.state.shopCart || [];
     return (
       <View className='index'
-        onTouchStart={this.onTouchStartHandler.bind(this)}>
+        onTouchStart={this.onTouchStartHandler.bind(this, {})}>
         {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
         <View className='carts'>
           {cart.map((e, i) => 
@@ -186,7 +184,7 @@ export default class Index extends Component {
                   onTouchStart={this.onTouchStartHandler.bind(this, e)}
                   onTouchEnd={this.onHandleSlideOut.bind(this, e)}
                   onTouchMove={this.onTouchMoveHandler.bind(this, e)}
-                  style={{ left: e.x || 0 }}>
+                  style={{ left: `${e.x || 0}` }}>
                 <Image className='good_image' src={e.images[0]} />
                 <View className='good_info'>
                   <Text className='good_info_name text_line_2'>{e.name}</Text>
