@@ -26,7 +26,7 @@ export default class Index extends Component {
     Taro.getSystemInfo({
       complete: e => {
         this.setState({
-          windowWidth: e.result.windowWidth
+          windowWidth: e.result ? e.result.windowWidth : e.windowWidth
         });
       }
     })
