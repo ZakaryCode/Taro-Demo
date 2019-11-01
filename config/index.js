@@ -88,7 +88,7 @@ module.exports = function (merge) {
       // '@tarojs/taro-h5': path.resolve(__dirname, '../../', '/taro/packages/taro-h5'),
       // '@tarojs/taro-quickapp': path.resolve(__dirname, '../../', '/taro/packages/taro-quickapp'),
       // '@tarojs/components': path.resolve(__dirname, '../../', '/taro/packages/taro-components'),
-      '@tarojs/components-qa': path.resolve(__dirname, '../../', '/taro/packages/taro-components-qa'),
+      // '@tarojs/components-qa': path.resolve(__dirname, '../../', '/taro/packages/taro-components-qa'),
       '@tarojs/taro-webpack-runner': path.resolve(__dirname, '../../', '/taro/packages/taro-webpack-runner'),
       '@tarojs/taro-mini-runner': path.resolve(__dirname, '../../', '/taro/packages/taro-mini-runner'),
       '@tarojs/transformer-wx': path.resolve(__dirname, '../../', '/taro/packages/taro-transformer-wx'),

@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     background-color: #eee;
-    margin-bottom: 100px;
+    // margin-bottom: 100px;
 }
 
 .cart_one {
@@ -95,12 +95,13 @@
 }
 
 .settle-accounts-btn {
-    position: fixed;
+    // position: fixed;
     width: 100%;
     height: 100px;
     line-height: 100px;
-    bottom: 0px;
+    // bottom: 110px;
     text-align: center;
+    padding: 30px;
 
     &_empty {
         background-color: #DDD;
@@ -110,5 +111,18 @@
     &_shop {
         background-color: #FF0000;
         color: #FFF;
+    }
+
+    .total {
+        color: #333;
+        margin: 0 30px;
+        flex: 1;
+    }
+
+    .settlement {
+        width: 240px;
+        height: 80px;
+        border-radius: 40;
+        text-align: center;
     }
 }

@@ -103,7 +103,7 @@ export default class Index extends Component {
     }, () => {
       const index = this.state.pageNumber || 0
       const list: any[] = this.state.list
-      list[index] = randerDate(pageSize)
+      list[index] = randomDate(pageSize)
       // const i = list.length - maxPage
       this.setState({
         list: [...list], // [...list.slice(i > 0 ? i : 0)],
@@ -112,7 +112,7 @@ export default class Index extends Component {
       })
     })
     
-    function randerDate(size) {
+    function randomDate(size) {
       return new Array(size).fill('').map(() => goods[Math.floor(Math.random() * goods.length)])
     }
   }
@@ -133,41 +133,43 @@ export default class Index extends Component {
         key: 'SHOP_CART',
         data: this.state.shopCart
       }).then(() => {
+        // Taro.setTabBarBadge({
+        //   index: 1,
+        //   text: this.state.shopCart.reduce((p, e: any) => p + e.count, 0)
+        // })
         Taro.showToast({ title: '添加至购物车', icon: 'none', duration: 2000 })
       })
     })
   }
 
   render () {
-    const list: any[] = this.state.list
+    const list: any[] = this.state.list;
+    const goods: any[] = [].concat(...list);
 
     return (
       <View className='index'>
         {process.env.TARO_ENV === 'h5' ? <View className='header'>{this.config.navigationBarTitleText}</View> : ''}
-        {list.map((p, i) => 
-          p && p.length > 0 ? <View key={`page_${i}`} className='goods_list'>
-            {p.map(e => <View key={e.id} className='good'>
-              <Image className='good_image' src={e.images[0]} />
-              <View className='good_info'>
-                <Text className='good_info_name text_line_2'>{e.name}</Text>
-                <View className='good_info_bottom'>
-                  <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
-                  <View className='good_info_bottom_shop_car' onClick={this.handleCart.bind(this, e)}>
-                    <View className='bg-icon shop-car_selected' />
-                  </View>
+        <View className='goods_list'>
+          {goods.map(e => <View key={e.id} className='good'>
+            <Image className='good_image' src={e.images[0]} />
+            <View className='good_info'>
+              <Text className='good_info_name text_line_2'>{e.name}</Text>
+              <View className='good_info_bottom'>
+                <Text className='good_info_bottom_price'>¥{(e.price / 100).toFixed(2)}</Text>
+                <View className='good_info_bottom_shop_car' onClick={this.handleCart.bind(this, e)}>
+                  <View className='bg-icon shop-car_selected' />
                 </View>
               </View>
-            </View>)}
-          </View>
-          : <View key={`page_${i}`} className='goods_list' />)
-        }
-        <View className='shop-car-btn' onClick={() => {
+            </View>
+          </View>)}
+        </View>
+        {/* <View className='shop-car-btn' onClick={() => {
           Taro.navigateTo({
             url: `${process.env.TARO_ENV === 'quickapp' ? '' : '/'}pages/cart/index`
           })
         }}>
           <View className='bg-icon shop-car' />
-        </View>
+        </View> */}
       </View>
     )
   }

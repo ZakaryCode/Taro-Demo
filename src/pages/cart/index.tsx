@@ -13,12 +13,14 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '购物车'
+    navigationBarTitleText: '购物车',
+    disableScroll: this.state.moveAction
   }
 
   state = {
     shopCart: [],
     moveAction: false,
+    windowHeight: 1920,
     windowWidth: 1080
   }
 
@@ -26,7 +28,8 @@ export default class Index extends Component {
     Taro.getSystemInfo({
       complete: e => {
         this.setState({
-          windowWidth: e.result ? e.result.windowWidth : e.windowWidth
+          windowWidth: e.result ? e.result.windowWidth : e.windowWidth,
+          windowHeight: e.result ? e.result.windowHeight : e.windowHeight
         })
       }
     })
@@ -45,6 +48,13 @@ export default class Index extends Component {
   }
 
   componentDidHide () { }
+
+  onPageScroll(distance) {
+    // console.log(this.state.startY, distance)
+    if (Math.abs(distance) > 10) {
+      this.onTouchStartHandler({}, undefined)
+    }
+  }
 
   handleCartCounters = (isIncrement, good) => () => {
     const cart: any[] = this.state.shopCart
@@ -74,25 +84,39 @@ export default class Index extends Component {
   }
 
   onTouchStartHandler = (good: any = {}, event) => {
-    const { pageX } = event.changedTouches[0] || event.touches[0]
-    const target = event.currentTarget
-    const children = target.children || event.touches || []
-    const hideWidth = (children[children.length - 1] || {}).offsetWidth || (160 / .75)
-    let _lists: any[] = this.state.shopCart
-    _lists.map(_item => {
-      if (_item.id != good.id) {
+    event && event.stopPropagation()
+    try {
+      const { pageX } = event.changedTouches[0] || event.touches[0]
+      const target = event.currentTarget
+      const children = target.children || event.touches || []
+      const hideWidth = (children[children.length - 1] || {}).offsetWidth || (160 / .75)
+      let _lists: any[] = this.state.shopCart
+      _lists.forEach(_item => {
+        if (_item.id != good.id) {
+          _item.x = 0
+        } else {
+          _item.startX = pageX
+          _item.widthRange = hideWidth
+        }
+      })
+      this.setState({
+        shopCart: _lists,
+        moveAction: true
+      })
+    } catch (error) {
+      let _lists: any[] = this.state.shopCart
+      _lists.forEach(_item => {
         _item.x = 0
-      } else {
-        _item.startX = pageX
-        _item.widthRange = hideWidth
-      }
-    })
-    this.setState({
-      shopCart: _lists
-    })
+      })
+      this.setState({
+        shopCart: _lists,
+        moveAction: true
+      })
+    }
   }
 
   onHandleSlideOut = (good: any = {}, event) => {
+    event && event.stopPropagation()
     const { moveAction } = this.state
     if (!moveAction) {
       return
@@ -113,6 +137,7 @@ export default class Index extends Component {
   }
 
   onTouchMoveHandler = (good: any = {}, event) => {
+    event && event.stopPropagation()
     const { pageX } = event.changedTouches[0] || event.touches[0]
     const distance = pageX - good.startX
     let _lists: any[] = this.state.shopCart
@@ -132,14 +157,14 @@ export default class Index extends Component {
   }
 
   onDeleteItem = (good: any = {}, event) => {
-    event.stopPropagation()
+    event && event.stopPropagation()
     Taro.showModal({
       title: "提示",
       content: `确定要从购物车移除“${good.name}”吗？`,
       success: res => {
         let _lists: any[] = this.state.shopCart
         if (res.confirm) {
-          _lists.map((_item, index, _lists) => {
+          _lists.forEach((_item, index, _lists) => {
             if (_item.id == good.id) {
               _lists.splice(index, 1)
             }
@@ -206,17 +231,25 @@ export default class Index extends Component {
               </View>
             </View>)}
         </View>
-        <View className={`settle-accounts-btn`} style={cart.length < 1 ? { backgroundColor: '#DDD' } : { backgroundColor: '#FF0000' }} onClick={() => cart.length < 1 ?
+        <View className={`settle-accounts-btn`} style={{ backgroundColor: '#FFF' }} onClick={() => cart.length < 1 ?
             Taro.showToast({ title: '购物车为空', icon: 'none', duration: 2000 }) :
             Taro.showModal({ title: '提示', content: '购买成功', showCancel: false }).then(() => {
               Taro.setStorage({
                 key: 'SHOP_CART',
                 data: []
               }).then(() => {
-                Taro.navigateBack()
+                Taro.switchTab({
+                  url: process.env.TARO_ENV === 'weapp' ? 'pages/index/index' : '/pages/index/index'
+                })
+                // Taro.navigateBack()
               })
             })}>
-          <Text style={cart.length < 1 ? { color: '#AAA' } : { color: '#FFF' }}>结算</Text>
+          <Text className='total'>合计: ¥{cart.reduce((p, e) => p + e.price / 100, 0).toFixed(2)}</Text>
+          <Text className='settlement' style={cart.length < 1 ? {
+            color: '#AAA', backgroundColor: '#DDD'
+          } : {
+            color: '#FFF', backgroundColor: '#FF0000',
+          }}>结算</Text>
         </View>
       </View>
     )

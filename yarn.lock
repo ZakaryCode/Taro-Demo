@@ -1007,10 +1007,10 @@
     weui "^1.1.2"
 
 "@tarojs/mini-runner@../taro/packages/taro-mini-runner":
-  version "1.3.21"
+  version "1.3.22"
   dependencies:
-    "@tarojs/taro" "1.3.21"
-    "@tarojs/transformer-wx" "1.3.21"
+    "@tarojs/taro" "1.3.22"
+    "@tarojs/transformer-wx" "1.3.22"
     babel-core "^6.26.3"
     babel-generator "^6.26.1"
     babel-loader "^8.0.6"
@@ -1206,10 +1206,17 @@
   dependencies:
     "@tarojs/utils" "1.3.21"
 
-"@tarojs/transformer-wx@1.3.21":
-  version "1.3.21"
-  resolved "http://r.cnpmjs.org/@tarojs/transformer-wx/download/@tarojs/transformer-wx-1.3.21.tgz#606a8b3c215e2dcf6c7c6247460c3648b3bd113b"
-  integrity sha1-YGqLPCFeLc9sfGJHRgw2SLO9ETs=
+"@tarojs/taro@1.3.22":
+  version "1.3.22"
+  resolved "http://r.cnpmjs.org/@tarojs/taro/download/@tarojs/taro-1.3.22.tgz#b953b6405de44e1eddc71b14e27738f88c92b3be"
+  integrity sha1-uVO2QF3kTh7dxxsU4nc4+IySs74=
+  dependencies:
+    "@tarojs/utils" "1.3.22"
+
+"@tarojs/transformer-wx@1.3.22":
+  version "1.3.22"
+  resolved "http://r.cnpmjs.org/@tarojs/transformer-wx/download/@tarojs/transformer-wx-1.3.22.tgz#e915082168e2f494526e6f6e3770551cd95a5aac"
+  integrity sha1-6RUIIWji9JRSbm9uN3BVHNlaWqw=
   dependencies:
     "@babel/code-frame" "^7.0.0-beta.44"
     babel-core "^6.26.3"
@@ -1230,7 +1237,7 @@
     babel-types "^6.26.0"
     eslint "5.16.0"
     eslint-plugin-react "7.10.0"
-    eslint-plugin-taro "1.3.21"
+    eslint-plugin-taro "1.3.22"
     html "^1.0.0"
     lodash "^4.17.5"
     prettier "^1.14.2"
@@ -1240,6 +1247,11 @@
   version "1.3.21"
   resolved "http://r.cnpmjs.org/@tarojs/utils/download/@tarojs/utils-1.3.21.tgz#56b5820a14ffd70c4e0b2364799e26f10392b889"
   integrity sha1-VrWCChT/1wxOCyNkeZ4m8QOSuIk=
+
+"@tarojs/utils@1.3.22":
+  version "1.3.22"
+  resolved "http://r.cnpmjs.org/@tarojs/utils/download/@tarojs/utils-1.3.22.tgz#38d473fc538a7ad6d7b2eab93eba3552794037d9"
+  integrity sha1-ONRz/FOKetbXsuq5Pro1UnlAN9k=
 
 "@tarojs/webpack-runner@1.3.21":
   version "1.3.21"
@@ -4936,6 +4948,13 @@ eslint-plugin-taro@1.3.21:
   dependencies:
     has "^1.0.1"
 
+eslint-plugin-taro@1.3.22:
+  version "1.3.22"
+  resolved "http://r.cnpmjs.org/eslint-plugin-taro/download/eslint-plugin-taro-1.3.22.tgz#c8c822990e194b6511e5eddd6ef7357fa420c05e"
+  integrity sha1-yMgimQ4ZS2UR5e3dbvc1f6QgwF4=
+  dependencies:
+    has "^1.0.1"
+
 eslint-scope@3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.1.tgz#3d63c3edfda02e06e01a452ad88caacc7cdcb6e8"
@@ -8253,10 +8272,18 @@ nerv-utils@1.4.5:
   resolved "https://registry.yarnpkg.com/nerv-utils/-/nerv-utils-1.4.5.tgz#3e017a8a1b605b35ee31ad396a038207fbc597b0"
   integrity sha512-9XeifC0l+aDXhA0aXcklxS2o7o87xJxMQAl1+iIHrD5Sei/61ubap0oOzb4t9VMhSEvwWm4/rJRd8PGMKZiwiA==
 
-nervjs@1.5.1, nervjs@^1.5.1:
+nervjs@1.5.1:
   version "1.5.1"
   resolved "http://r.cnpmjs.org/nervjs/download/nervjs-1.5.1.tgz#86d2fcc75a8b5c6d7060e133c1d7ceeb11ce75ed"
   integrity sha1-htL8x1qLXG1wYOEzwdfO6xHOde0=
+  dependencies:
+    nerv-shared "1.4.0"
+    nerv-utils "1.4.5"
+
+nervjs@^1.5.2:
+  version "1.5.2"
+  resolved "http://r.cnpmjs.org/nervjs/download/nervjs-1.5.2.tgz#069b93d77b0d70f1455bb5e14d1f385e6a555006"
+  integrity sha1-BpuT13sNcPFFW7XhTR84XmpVUAY=
   dependencies:
     nerv-shared "1.4.0"
     nerv-utils "1.4.5"

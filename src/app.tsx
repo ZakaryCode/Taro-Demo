@@ -30,15 +30,21 @@ class App extends Component {
       navigationBarTextStyle: 'black',
       onReachBottomDistance: 300
     },
-    // tabBar: {
-    //   list: [{
-    //     pagePath: process.env.TARO_ENV === 'weapp' ? 'pages/index/index' : '/pages/index/index',
-    //     text: '首页'
-    //   }, {
-    //     pagePath: process.env.TARO_ENV === 'weapp' ? 'pages/cart/index' : '/pages/cart/index',
-    //     text: '购物车'
-    //   }]
-    // },
+    tabBar: {
+      color: '#333',
+      selectedColor: '#ff0000',
+      list: [{
+        pagePath: process.env.TARO_ENV === 'weapp' ? 'pages/index/index' : '/pages/index/index',
+        text: '首页',
+        iconPath: './assets/home.png',
+        selectedIconPath: './assets/home-select.png'
+      }, {
+        pagePath: process.env.TARO_ENV === 'weapp' ? 'pages/cart/index' : '/pages/cart/index',
+        text: '购物车',
+        iconPath: './assets/shop-car2.png',
+        selectedIconPath: './assets/shop-car2-select.png'
+      }]
+    },
   }
 
   componentDidMount () {}
